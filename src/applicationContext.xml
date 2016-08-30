@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	 http://www.springframework.org/schema/aop   
+             http://www.springframework.org/schema/aop/spring-aop-3.1.xsd "
+	xmlns:tx="http://www.springframework.org/schema/tx">
+	<description>Spring公共配置 </description>
+
+
+	<!-- 定义受环境影响易变的变量 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<!-- 标准配置 -->
+				<value>classpath*:/application.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<context:component-scan base-package="com.el" />
+	<aop:aspectj-autoproxy />
+	<!-- DBCP dataSource config -->
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourceInterface"></property>
+	</bean>
+
+	<!-- 配置app接口项目数据库连接 -->
+	<bean id="dataSourceInterface" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<!-- Connection Info -->
+		<property name="driverClassName" value="${ojdbc.driver}"></property>
+		<property name="url" value="${ojdbc.url}"></property>
+		<property name="username" value="${ojdbc.username}"></property>
+		<property name="password" value="${ojdbc.password}"></property>
+		<!-- Connection Pooling Info -->
+
+		<!-- initialSize ：连接池启动时创建的初始化连接数量（默认值为0） -->
+		<property name="initialSize" value="5" />
+
+		<!-- maxActive ：连接池中可同时连接的最大的连接数（默认值为8，调整为20，高峰单机器在20并发左右，自己根据应用场景定） -->
+		<property name="maxActive" value="100" />
+
+		<!-- maxIdle：连接池中最大的空闲的连接数，超过的空闲连接将被释放，如果设置为负数表示不限制（默认为8个，maxIdle不能设置太小，因为假如在高负载的情况下，连接的打开时间比关闭的时间快，会引起连接池中idle的个数 
+			上升超过maxIdle，而造成频繁的连接销毁和创建，类似于jvm参数中的Xmx设置) -->
+		<property name="maxIdle" value="10" />
+
+		<!-- minIdle：连接池中最小的空闲的连接数，低于这个数量会被创建新的连接 （默认为0，调整为5，该参数越接近maxIdle，性能越好，因为连接的创建和销毁， 
+			都是需要消耗资源的；但是不能太大，因为在机器很空闲的时候， 也会创建低于minidle个数的连接，类似于jvm参数中的Xmn设置） -->
+		<property name="minIdle" value="10" />
+
+		<!-- maxWait ：最大等待时间，当没有可用连接时，连接池等待连接释放的最大时间， 超过该时间限制会抛出异常，如果设置-1表示无限等待（默认为无限，调整为10000ms，避免因线程池不够用，而导致请求被无限制挂起） -->
+		<property name="maxWait" value="10000" />
+
+		<!-- poolPreparedStatements：开启池的prepared（默认是false，未调整，经过测试，开启后的性能没有关闭的好。） -->
+		<property name="poolPreparedStatements" value="false" />
+		<property name="defaultAutoCommit" value="false" />
+
+		<!-- minEvictableIdleTimeMillis ：连接池中连接，在时间段内一直空闲， 被逐出连接池的时间 -->
+		<property name="minEvictableIdleTimeMillis">
+			<value>10000</value>
+		</property>
+		<property name="timeBetweenEvictionRunsMillis">
+			<value>60000</value>
+		</property>
+
+		<!-- removeAbandonedTimeout ：超过时间限制，回收没有用(废弃)的连接（默认为 300秒，调整为10） removeAbandoned 
+			：超过removeAbandonedTimeout时间后，是否进 行没用连接（废弃）的回收（默认为false，调整为true) -->
+		<property name="removeAbandonedTimeout" value="10" />
+		<property name="removeAbandoned" value="true" />
+	</bean>
+
+	<!-- 配置ERP项目数据库连接 -->
+	<bean id="dataSourceErp" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<!-- Connection Info -->
+		<property name="driverClassName" value="${ojdbc2.driver}"></property>
+		<property name="url" value="${ojdbc2.url}"></property>
+		<property name="username" value="${ojdbc2.username}"></property>
+		<property name="password" value="${ojdbc2.password}"></property>
+		<!-- Connection Pooling Info -->
+
+		<!-- initialSize ：连接池启动时创建的初始化连接数量（默认值为0） -->
+		<property name="initialSize" value="5" />
+
+		<!-- maxActive ：连接池中可同时连接的最大的连接数（默认值为8，调整为20，高峰单机器在20并发左右，自己根据应用场景定） -->
+		<property name="maxActive" value="100" />
+
+		<!-- maxIdle：连接池中最大的空闲的连接数，超过的空闲连接将被释放，如果设置为负数表示不限制（默认为8个，maxIdle不能设置太小，因为假如在高负载的情况下，连接的打开时间比关闭的时间快，会引起连接池中idle的个数 
+			上升超过maxIdle，而造成频繁的连接销毁和创建，类似于jvm参数中的Xmx设置) -->
+		<property name="maxIdle" value="10" />
+
+		<!-- minIdle：连接池中最小的空闲的连接数，低于这个数量会被创建新的连接 （默认为0，调整为5，该参数越接近maxIdle，性能越好，因为连接的创建和销毁， 
+			都是需要消耗资源的；但是不能太大，因为在机器很空闲的时候， 也会创建低于minidle个数的连接，类似于jvm参数中的Xmn设置） -->
+		<property name="minIdle" value="10" />
+
+		<!-- maxWait ：最大等待时间，当没有可用连接时，连接池等待连接释放的最大时间， 超过该时间限制会抛出异常，如果设置-1表示无限等待（默认为无限，调整为10000ms，避免因线程池不够用，而导致请求被无限制挂起） -->
+		<property name="maxWait" value="10000" />
+
+		<!-- poolPreparedStatements：开启池的prepared（默认是false，未调整，经过测试，开启后的性能没有关闭的好。） -->
+		<property name="poolPreparedStatements" value="false" />
+		<property name="defaultAutoCommit" value="false" />
+
+		<!-- minEvictableIdleTimeMillis ：连接池中连接，在时间段内一直空闲， 被逐出连接池的时间 -->
+		<property name="minEvictableIdleTimeMillis">
+			<value>10000</value>
+		</property>
+		<property name="timeBetweenEvictionRunsMillis">
+			<value>60000</value>
+		</property>
+
+		<!-- removeAbandonedTimeout ：超过时间限制，回收没有用(废弃)的连接（默认为 300秒，调整为10） removeAbandoned 
+			：超过removeAbandonedTimeout时间后，是否进 行没用连接（废弃）的回收（默认为false，调整为true) -->
+		<property name="removeAbandonedTimeout" value="10" />
+		<property name="removeAbandoned" value="true" />
+	</bean>
+
+	<!-- 配置动态数据源 -->
+	<bean id="dynamicDataSource" class="com.el.connect.DynamicDataSource">
+		<!-- 通过key-value的形式来关联数据源 -->
+		<property name="targetDataSources">
+			<map>
+				<entry value-ref="dataSourceInterface" key="dataSourceInterface"></entry>
+				<entry value-ref="dataSourceErp" key="dataSourceErp"></entry>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="dataSourceInterface" />
+	</bean>
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dynamicDataSource" />
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.el.entity</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<!-- <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop> -->
+				<!-- 修改了一下数据库方言，继承oracle的方言，增加了对自定义函数的定义 -->
+				<prop key="hibernate.dialect">com.el.base.oracledialect.ElOracleDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+				<!-- <prop key="hibernate.current_session_context_class">thread</prop> -->
+				<!-- <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext 
+					</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
+</beans>

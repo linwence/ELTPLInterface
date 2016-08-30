@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.action.extension" value="action"></constant>
+	<!--生产为true -->
+	<constant name="struts.serve.static.browserCache" value="false"></constant>
+	<!--生产为false -->
+	<constant name="struts.configuration.xml.reload" value="true"></constant>
+	<constant name="struts.devMode" value="true"></constant>
+
+	<package name="default" namespace="/baidu" extends="struts-default,json-default">
+
+		<interceptors>
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="json">
+					<param name="enableSMD">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="defaultStack" />
+
+		<action name="orderCreate" class="com.el.action.baidu.OrderAction"
+			method="orderCreate">
+
+			<result type="json">
+				<param name="root">data</param>
+			</result>
+		</action>
+
+
+
+
+	</package>
+
+	<package name="meituan" namespace="/meituan" extends="struts-default,json-default">
+
+		<interceptors>
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="json">
+					<param name="enableSMD">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="defaultStack" />
+
+
+
+		<action name="meituanOrderCreate" class="com.el.action.meituan.MeiTuanOrderAction"
+			method="orderCreate">
+			<result type="json">
+				<param name="root">data</param>
+			</result>
+		</action>
+
+
+
+	</package>
+
+	<package name="eleme" namespace="/eleme" extends="struts-default,json-default">
+
+		<interceptors>
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="json">
+					<param name="enableSMD">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="defaultStack" />
+		<action name="orderPush" class="com.el.action.eleme.ElemeOrderAction"
+			method="orderCreate">
+			<result type="json">
+				<param name="root">data</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="common" extends="struts-default,json-default">
+		<interceptors>
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="json">
+					<param name="enableSMD">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="defaultStack" />
+	</package>
+
+	<package name="app" namespace="/app" extends="common">
+		<action name="appAccess" class="com.el.action.apporder.AppOrderAction"
+			method="appAccess">
+			<result type="json">
+				<param name="root">data</param>
+			</result>
+		</action>
+	</package>
+	
+	<package name="distribution" namespace="/distribution" extends="struts-default,json-default">
+		<action name="dataService" class="com.el.action.distribution.DistributionAction"
+			method="processRequest">
+			<result type="json">
+			    <param name="root">data</param>
+			</result>
+		</action>
+		<action name="test" class="com.el.action.distribution.DistributionAction"
+			method="test">
+			<result type="json">
+			    <param name="root">data</param>
+			</result>
+		</action>
+		<action name="test2" class="com.el.action.distribution.DistributionAction"
+			method="test2">
+			<result type="json">
+			    <param name="root">data</param>
+			</result>
+		</action>
+	</package>
+
+
+</struts>    

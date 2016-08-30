@@ -1,0 +1,5 @@
+2015-11-23 09:25:34  [ main:1 ] - [ ERROR ]  饿了么订单，orderid=1生成订单失败，错误信息:null
+  java.lang.NullPointerException
+	at com.el.action.eleme.impl.ElemeOrderDoSave.orderCreate(ElemeOrderDoSave.java:197)
+	at com.el.action.eleme.ElemeOrderAction.orderCreate(ElemeOrderAction.java:199)
+	at com.el.action.eleme.ElemeTest.main(ElemeTest.java:66)

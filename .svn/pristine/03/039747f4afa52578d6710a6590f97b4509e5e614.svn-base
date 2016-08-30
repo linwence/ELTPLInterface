@@ -1,0 +1,18 @@
+package com.el.service.distribution;
+
+import java.util.TreeMap;
+
+import com.el.action.distribution.RequestParameterBody;
+
+public interface IDistributionService {
+	public int test_interfaceDB() throws Exception;
+	public int test_erpDB() throws Exception;
+	
+	public TreeMap<String, Object> getOrder_todo(RequestParameterBody body);
+	public TreeMap<String, Object> getOrder_done(RequestParameterBody body);
+	public TreeMap<String, Object> grabOrder(RequestParameterBody body);
+	public TreeMap<String, Object> reduceInventory(RequestParameterBody body);
+	public TreeMap<String, Object> distribute_complete(RequestParameterBody body);
+	public TreeMap<String, Object> distribute_reject(RequestParameterBody body);
+	public TreeMap<String, Object> reduceInventory_callPro(RequestParameterBody body);
+}

@@ -1,0 +1,71 @@
+
+##malayouhuo 
+#ojdbc.url=jdbc:oracle:thin:@localhost:1521:orcl
+#ojdbc.username=jderep
+#ojdbc.password=jderep
+ojdbc.driver=oracle.jdbc.driver.OracleDriver
+ojdbc.url=jdbc:oracle:thin:@192.168.10.57:1521:jdedbrep
+#test
+ojdbc.username=jdetestrep
+ojdbc.password=2015mlyh
+#ojdbc.username=jderep
+#ojdbc.password=2015mlyh
+
+ojdbc2.driver=oracle.jdbc.driver.OracleDriver
+ojdbc2.url=jdbc:oracle:thin:@192.168.10.52:1521:JDEDB
+#ojdbc2.username=CRPDTA
+#ojdbc2.password=CRPDTA
+ojdbc2.username=TESTDTA
+ojdbc2.password=TESTDTA
+
+
+#baidu wai mai
+baiduurl=http://api.waimai.baidu.com
+#test
+#baidusource=65478
+#baidusecret=5a5cdda47e233d9c
+
+#zhengshi 
+baidusource=30079
+baidusecret=0cc9ac38848f19a1
+baidumap_Url=http://api.map.baidu.com/geocoder/v2/
+baidumap_Ak=SzEGaWmVMsGEEKGkEHnpGxbM
+
+#meituan wai mai
+meituan_appid=147
+#test
+#meituan_secret=feebfad1ad54d9235b9d4052c1ada7de
+#meituan_confirmUrl=http://test.waimaiopen.meituan.com/api/v1/order/confirm
+#zhengshi meituan 
+meituan_secret=115f4fbe8c68f040cacd85ffb2bd4beb
+meituan_confirmUrl=http://waimaiopen.meituan.com/api/v1/order/confirm
+
+
+#eleme wai mai
+eleme_basicUrl=http://v2.openapi.ele.me
+eleme_consumer_key=5328448114
+eleme_consumer_secret=b30ac4efc732f9b49097721fa53115187ad976c3
+eleme_restaurant_id=33450496
+eleme_orderNew_Url=http://v2.openapi.ele.me/order/new/
+eleme_orderInfo_Url=http://v2.openapi.ele.me/order/
+
+#app xiadan
+#test
+appsecret=d3a6d90e758e846a
+
+#app peisong
+appsecretDistribute=b1657f27cf602c9b
+
+
+###WEBSERVICE start
+#webservice test
+WS_GetNextUniqueID=http://192.168.10.51:8013/PY910/GetNextUniqueID?WSDL
+WS_GenerateRetailOrderClass=http://192.168.10.51:8013/PY910/GenerateRetailOrderClass?WSDL
+WS_MemberInformationClass=http://192.168.10.51:8013/PY910/MemberInformationClass?WSDL
+WS_MemberMutipleAddressClass=http://192.168.10.51:8013/PY910/MemberMutipleAddressClass?WSDL
+#webservice zhengshi
+#WS_GetNextUniqueID=http://192.168.10.51:8015/PY910/GetNextUniqueID?WSDL
+#WS_GenerateRetailOrderClass=http://192.168.10.51:8015/PY910/GenerateRetailOrderClass?WSDL
+#WS_MemberInformationClass=http://192.168.10.51:8015/PY910/MemberInformationClass?WSDL
+#WS_MemberMutipleAddressClass=http://192.168.10.51:8015/PY910/MemberMutipleAddressClass?WSDL
+###WEBSERVICE End
